@@ -80,7 +80,7 @@ wp-db-backup --path=/var/www/example.com/htdocs --type=scp --ssh=user@host:/path
 
 [s3cmd](https://github.com/s3tools/s3cmd) - A very popular Amazon S3 client is being used for this type of backup. The setup script should automatically install the script for you if you're using debian based distributions. Otherwise you can install the tool manually.
 
-After installation, please configure your S3 client using `s3cmd --configure` and make sure you can upload files to your S3 bucket.
+After installation, please configure your S3 client using `s3cmd --configure` and make sure you can upload files to your S3 bucket. Please follow [this guide](https://updraftplus.com/faqs/what-settings-should-i-use-for-amazon-s3-and-how-should-i-configure-my-amazon-s3-account/) to securely configure your S3 bucket.
 
 **s3path:** Let's say your S3 bucket name is `my-backup` and the backup directory is `sitename`, the s3cmd compatible way of putting a file is: `s3cmd put filename.zip s3://my-backup/sitename`. So your backup command will be:
 
