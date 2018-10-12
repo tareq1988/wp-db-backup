@@ -78,7 +78,13 @@ FULL_NAME=$FILE_NAME-$(date +%Y-%m-%d-%H%M%S).sql.gz
 if [ "$TYPE" == "dir" ]; then
     echo "Backing up database to directory..."
 
-    wp db export - --path=$WP_PATH | gzip > "$BACKUP_DIR/$FULL_NAME"
+    # Create backup directory if not present
+    if [ ! -d "$BACKUP_DIR" ]; then
+        echo "No backup directory present, creating in: $BACKUP_DIR"
+        mkdir $BACKUP_DIR
+    fi
+
+    wp db export - --path=$WP_PATH --allow-root | gzip > "$BACKUP_DIR/$FULL_NAME"
     echo "Backup complete and stored in: $BACKUP_DIR/$FULL_NAME"
 
 elif [ "$TYPE" == "scp" ]; then
@@ -89,7 +95,7 @@ elif [ "$TYPE" == "scp" ]; then
         exit 1
     fi
 
-    wp db export - --path=$WP_PATH | gzip > "./$FULL_NAME"
+    wp db export - --path=$WP_PATH --allow-root | gzip > "./$FULL_NAME"
 
     echo "Backup created, copying to remote host..."
     scp "./$FULL_NAME" "$SSH"
@@ -113,7 +119,7 @@ elif [ "$TYPE" == "s3" ]; then
 
     echo "Copying to S3 destination"
 
-    wp db export - --path=$WP_PATH | gzip > "./$FULL_NAME"
+    wp db export - --path=$WP_PATH --allow-root | gzip > "./$FULL_NAME"
     s3cmd put "./$FULL_NAME" "s3://$S3_PATH"
 
     echo "Deleting local copy"
