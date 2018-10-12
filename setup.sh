@@ -37,7 +37,7 @@ if [ ! -f /usr/local/bin/wp-db-backup ]; then
     printf "\n"
     echo "Installing Backup Script..."
     printf "\n"
-    wget -qO /usr/local/bin/wp-db-backup https://raw.githubusercontent.com/tareq1988/master/setup.sh
+    wget -qO /usr/local/bin/wp-db-backup https://raw.githubusercontent.com/tareq1988/wp-db-backup/master/backup.sh
 
     # Executable permission
     chmod a+x /usr/local/bin/wp-db-backup
