@@ -2,6 +2,8 @@
 
 A commandline tool for backing up your WordPress site to local folder, remote location using SFTP (SCP) and Amazon S3.
 
+Quick Links: [Installation](#installation) | [Using](#using) | [Cron Job](#cron-job) | [Wiki](https://github.com/tareq1988/wp-db-backup/wiki) | [FAQ](https://github.com/tareq1988/wp-db-backup/wiki/FAQ)
+
 ## How it works
 
 This is just a shell script that uses the combination of [WP-CLI](https://wp-cli.org/) to backup your WordPress database, Linux [SCP](http://manpages.ubuntu.com/manpages/bionic/man1/scp.1.html) (Secure Copy) to move the backup to a remote destination of SSH, and [s3cmd](https://github.com/s3tools/s3cmd) - a CLI tool to copy files to Amazon S3. The backup file will be gzipped automatically.
@@ -56,7 +58,7 @@ wp-db-backup
  2. Remote Backup using SFTP. `--type=scp`
  3. Remote Backup to Amazon S3. `--type=s3`
 
-### 1. Local Backup
+### Local Backup
 
 **Type:**
 If you want to backup your database to the same machine, this is the default backup type and you don't need to pass the additional `--type=dir` parameter. 
@@ -68,7 +70,7 @@ By default the backup will be stored in `Backups` folder in your home directory 
 wp-db-backup --path=/var/www/example.com/htdocs --backup-dir=/home/user/dir
 ~~~
 
-### 2. Remote Backup - SFTP
+### Remote Backup - SFTP
 
 We are using the [SCP](http://manpages.ubuntu.com/manpages/bionic/man1/scp.1.html) command to push the backup file to a remote location accessible by your host machine.
 
@@ -76,19 +78,19 @@ We are using the [SCP](http://manpages.ubuntu.com/manpages/bionic/man1/scp.1.htm
 wp-db-backup --path=/var/www/example.com/htdocs --type=scp --ssh=user@host:/path/to/directory
 ~~~
 
-### 3. Remote Backup - Amazon S3
+### Remote Backup - Amazon S3
 
 [s3cmd](https://github.com/s3tools/s3cmd) - A very popular Amazon S3 client is being used for this type of backup. The setup script should automatically install the script for you if you're using debian based distributions. Otherwise you can install the tool manually.
 
-After installation, please configure your S3 client using `s3cmd --configure` and make sure you can upload files to your S3 bucket. Please follow [this guide](https://updraftplus.com/faqs/what-settings-should-i-use-for-amazon-s3-and-how-should-i-configure-my-amazon-s3-account/) to securely configure your S3 bucket.
+After installation, please configure your S3 client using `s3cmd --configure` and make sure you can upload files to your S3 bucket. Please take a look at [these S3 policies](https://github.com/tareq1988/wp-db-backup/wiki/S3-Policies) to securely configure your S3 bucket. 
 
-**s3path:** Let's say your S3 bucket name is `my-backup` and the backup directory is `sitename`, the s3cmd compatible way of putting a file is: `s3cmd put filename.zip s3://my-backup/sitename`. So your backup command will be:
+**s3path:** Let's say your S3 bucket name is `my-backup` and the backup directory is `sitename`, the s3cmd compatible way of putting a file is: `s3cmd put filename.zip s3://my-backup/sitename/`. So your backup command will be:
 
 ~~~
-wp-db-backup --path=/var/www/example.com/htdocs --type=s3 --s3path=my-backup/sitename
+wp-db-backup --path=/var/www/example.com/htdocs --type=s3 --s3path=my-backup/sitename/
 ~~~
 
-You don't need to put the full `s3://my-backup/sitename` path, `s3://` will be automatically prepended for you.
+You don't need to put the full `s3://my-backup/sitename/` path, `s3://` will be automatically prepended for you.
 
 ## Cron Job
 
@@ -99,15 +101,15 @@ Example cronjob for 3 types of backup.
 ~~~
 0 0 * * *	wp-db-backup --path=/var/www/example.com/htdocs --backup-dir=/home/user/dir
 0 0 * * *	wp-db-backup --path=/var/www/example.com/htdocs --type=scp --ssh=user@host:/path/to/directory
-0 0 * * *	wp-db-backup --path=/var/www/example.com/htdocs --type=s3 --s3path=my-backup/sitename
+0 0 * * *	wp-db-backup --path=/var/www/example.com/htdocs --type=s3 --s3path=my-backup/sitename/
 ~~~
 
-**Daily Backup:**
+**Weekly Backup:**
 
 ~~~
 0 0 * * 0	wp-db-backup --path=/var/www/example.com/htdocs --backup-dir=/home/user/dir
 0 0 * * 0	wp-db-backup --path=/var/www/example.com/htdocs --type=scp --ssh=user@host:/path/to/directory
-0 0 * * 0	wp-db-backup --path=/var/www/example.com/htdocs --type=s3 --s3path=my-backup/sitename
+0 0 * * 0	wp-db-backup --path=/var/www/example.com/htdocs --type=s3 --s3path=my-backup/sitename/
 ~~~
 
 ## Credits
