@@ -99,17 +99,17 @@ Example cronjob for 3 types of backup.
 **Daily Backup:**
 
 ~~~
-0 0 * * *	wp-db-backup --path=/var/www/example.com/htdocs --backup-dir=/home/user/dir
-0 0 * * *	wp-db-backup --path=/var/www/example.com/htdocs --type=scp --ssh=user@host:/path/to/directory
-0 0 * * *	wp-db-backup --path=/var/www/example.com/htdocs --type=s3 --s3path=my-backup/sitename/
+0 0 * * *	/usr/local/bin/wp-db-backup --path=/var/www/example.com/htdocs --backup-dir=/home/user/dir
+0 0 * * *	/usr/local/bin/wp-db-backup --path=/var/www/example.com/htdocs --type=scp --ssh=user@host:/path/to/directory
+0 0 * * *	/usr/local/bin/wp-db-backup --path=/var/www/example.com/htdocs --type=s3 --s3path=my-backup/sitename/
 ~~~
 
 **Weekly Backup:**
 
 ~~~
-0 0 * * 0	wp-db-backup --path=/var/www/example.com/htdocs --backup-dir=/home/user/dir
-0 0 * * 0	wp-db-backup --path=/var/www/example.com/htdocs --type=scp --ssh=user@host:/path/to/directory
-0 0 * * 0	wp-db-backup --path=/var/www/example.com/htdocs --type=s3 --s3path=my-backup/sitename/
+0 0 * * 0	/usr/local/bin/wp-db-backup --path=/var/www/example.com/htdocs --backup-dir=/home/user/dir
+0 0 * * 0	/usr/local/bin/wp-db-backup --path=/var/www/example.com/htdocs --type=scp --ssh=user@host:/path/to/directory
+0 0 * * 0	/usr/local/bin/wp-db-backup --path=/var/www/example.com/htdocs --type=s3 --s3path=my-backup/sitename/
 ~~~
 
 ## Credits
