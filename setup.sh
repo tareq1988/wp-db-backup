@@ -26,7 +26,7 @@ if ! command -v s3cmd --version; then
     printf "\n"
     echo "Installing s3cmd..."
     printf "\n"
-    sudo apt-get install s3cmd
+    sudo apt-get install -y s3cmd python-magic
 
     printf "\n"
     echo "s3cmd Installed!"
